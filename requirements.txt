@@ -1,0 +1,25 @@
+# Disesuaikan untuk Python 3.13 (Windows) -- lihat catatan tiap baris.
+
+# Kivy 2.3.1 resmi mendukung Python 3.8-3.13. Sebelumnya dipin ke 2.3.0
+# (versi lama), dinaikkan ke 2.3.1 karena itu yang sudah terverifikasi
+# berhasil terinstall & jalan di environment kamu.
+kivy==2.3.1
+
+# pyjnius HANYA relevan saat app benar-benar di-build/jalan di Android
+# (lewat buildozer/python-for-android). Di-comment dulu di sini karena
+# pyjnius butuh JDK terinstall (JAVA_HOME) untuk bisa di-build di Windows,
+# dan itu belum ada di PC kamu. main.py sudah dijaga dengan pengecekan
+# "if platform == 'android'" jadi tetap aman dijalankan di PC tanpa ini --
+# buildozer nanti otomatis handle pyjnius+JDK sendiri saat build ke APK di WSL2.
+# pyjnius==1.6.1
+
+requests==2.32.3
+buildozer==1.5.0
+
+# Dinaikkan dari 0.29.36 (lama, sering gagal build di Python 3.12/3.13)
+# ke Cython 3.x yang sudah didukung resmi oleh pyjnius versi terbaru.
+cython>=3.0.0
+certifi>=2024.2.2
+
+# Untuk merender SVG ke PNG di runtime (opsional; fallback ke avatar canvas jika tidak terpasang)
+cairosvg>=2.6.0

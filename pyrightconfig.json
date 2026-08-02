@@ -1,0 +1,12 @@
+{
+  "stubPath": "typings",
+  "typeCheckingMode": "basic",
+  "pythonVersion": "3.13",
+  "extraPaths": [
+    "C:\\Users\\ppico\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages"
+  ],
+  "reportMissingModuleSource": "none",
+  "reportAttributeAccessIssue": "none",
+  "reportOptionalMemberAccess": "none",
+  "reportIncompatibleMethodOverride": "none"
+}

@@ -1,0 +1,15 @@
+import os
+from google import genai
+
+# Daftarkan variabel ke dalam environment system lewat Python
+os.environ["GEMINI_API_KEY"] = "AQ.Ab8RN6KsU5-c5m6OAW0VMw6KJPnDtPWj34n4OUPa2jnpbnhwVw"
+
+# Sekarang Client() bisa otomatis membaca key di atas
+client = genai.Client()
+
+response = client.models.generate_content(
+    model="gemini-2.5-flash",
+    contents="Halo Gemini, tes koneksi dengan os.environ.",
+)
+
+print(response.text)

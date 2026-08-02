@@ -1,0 +1,621 @@
+{
+  "events": [
+    {
+      "waktu": "2026-07-26 11:30:20",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 11:48:18",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 12:16:57",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 12:26:00",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 17:17:35",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 17:36:34",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 17:39:37",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 17:58:53",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 18:03:56",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 18:05:38",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 18:05:51",
+      "jenis": "pesan_user",
+      "isi": "hay"
+    },
+    {
+      "waktu": "2026-07-26 18:05:51",
+      "jenis": "balasan_kivy",
+      "isi": "Maaf Bos, aku belum paham maksudnya. Coba 'buka <app>', tanya harga bitcoin, atau 'ada berita apa'."
+    },
+    {
+      "waktu": "2026-07-26 18:06:18",
+      "jenis": "pesan_user",
+      "isi": "buka whastapp"
+    },
+    {
+      "waktu": "2026-07-26 18:06:27",
+      "jenis": "pesan_user",
+      "isi": "buka google"
+    },
+    {
+      "waktu": "2026-07-26 18:06:45",
+      "jenis": "pesan_user",
+      "isi": "saham yang lagi treding"
+    },
+    {
+      "waktu": "2026-07-26 18:06:45",
+      "jenis": "balasan_kivy",
+      "isi": "💰 DATA PASAR AKTIF\nBitcoin  : $64,475\nEthereum : $1,885.5\nSolana   : $75.08\nS&P 500  : 7411.98"
+    },
+    {
+      "waktu": "2026-07-26 18:06:58",
+      "jenis": "pesan_user",
+      "isi": "koin micin bagaimana"
+    },
+    {
+      "waktu": "2026-07-26 18:06:59",
+      "jenis": "balasan_kivy",
+      "isi": "Maaf Bos, aku belum paham maksudnya. Coba 'buka <app>', tanya harga bitcoin, atau 'ada berita apa'."
+    },
+    {
+      "waktu": "2026-07-26 18:07:27",
+      "jenis": "pesan_user",
+      "isi": "vidio yang lagi viral"
+    },
+    {
+      "waktu": "2026-07-26 18:07:28",
+      "jenis": "balasan_kivy",
+      "isi": "Cek kartu Video Trending & Berita Trending di bawah chat ya, Bos -- aku update tiap 5 menit."
+    },
+    {
+      "waktu": "2026-07-26 18:31:12",
+      "jenis": "pesan_user",
+      "isi": "tgl 15 agust 2026 ada acara tolong simpan dan ingatkan"
+    },
+    {
+      "waktu": "2026-07-26 18:31:12",
+      "jenis": "balasan_kivy",
+      "isi": "Maaf Bos, aku belum paham maksudnya. Coba 'buka <app>', tanya harga bitcoin, atau 'ada berita apa'."
+    },
+    {
+      "waktu": "2026-07-26 21:55:04",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 22:42:18",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 22:44:33",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 22:50:26",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 23:02:23",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-26 23:02:38",
+      "jenis": "pesan_user",
+      "isi": "buka gate.io"
+    },
+    {
+      "waktu": "2026-07-26 23:02:48",
+      "jenis": "pesan_user",
+      "isi": "kamu siapa"
+    },
+    {
+      "waktu": "2026-07-26 23:02:49",
+      "jenis": "balasan_kivy",
+      "isi": "Maaf Bos, aku belum paham maksudnya. Coba 'buka <app>', tanya harga bitcoin, atau 'ada berita apa'."
+    },
+    {
+      "waktu": "2026-07-27 18:08:18",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-27 18:08:33",
+      "jenis": "pesan_user",
+      "isi": "sejarah coding"
+    },
+    {
+      "waktu": "2026-07-27 18:08:35",
+      "jenis": "balasan_kivy",
+      "isi": "AI error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors."
+    },
+    {
+      "waktu": "2026-07-27 18:17:08",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-27 18:17:17",
+      "jenis": "pesan_user",
+      "isi": "SELAMAT PAGI"
+    },
+    {
+      "waktu": "2026-07-27 18:17:18",
+      "jenis": "balasan_kivy",
+      "isi": "AI error: Incorrect API key provided: AQ.Ab8RN*****************************************CumQ. You can find your API key at https://platform.openai.com/account/api-keys."
+    },
+    {
+      "waktu": "2026-07-27 18:20:32",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-27 18:20:47",
+      "jenis": "pesan_user",
+      "isi": "selamat pagi"
+    },
+    {
+      "waktu": "2026-07-27 18:20:48",
+      "jenis": "balasan_kivy",
+      "isi": "Gemini API error: This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements."
+    },
+    {
+      "waktu": "2026-07-27 18:30:49",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-27 18:31:18",
+      "jenis": "pesan_user",
+      "isi": "2+2="
+    },
+    {
+      "waktu": "2026-07-27 18:31:21",
+      "jenis": "balasan_kivy",
+      "isi": "Gemini API error: This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements."
+    },
+    {
+      "waktu": "2026-07-29 18:06:19",
+      "jenis": "sistem",
+      "isi": "Aplikasi dibuka"
+    },
+    {
+      "waktu": "2026-07-29 18:49:54",
+      "jenis": "pesan_user",
+      "isi": "sejarah indonesia"
+    },
+    {
+      "waktu": "2026-07-29 18:49:57",
+      "jenis": "balasan_kivy",
+      "isi": "Gemini Error (404): This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements."
+    },
+    {
+      "waktu": "2026-07-29 18:50:11",
+      "jenis": "pesan_user",
+      "isi": "2+2"
+    },
+    {
+      "waktu": "2026-07-29 18:50:13",
+      "jenis": "balasan_kivy",
+      "isi": "Gemini Error (404): This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements."
+    },
+    {
+      "waktu": "2026-07-29 18:50:38",
+      "jenis": "pesan_user",
+      "isi": "buka whshapp"
+    },
+    {
+      "waktu": "2026-07-29 18:50:47",
+      "jenis": "pesan_user",
+      "isi": "hitung"
+    },
+    {
+      "waktu": "2026-07-29 18:50:48",
+      "jenis": "balasan_kivy",
+      "isi": "Ketik soalnya juga ya Bos, misal: 'hitung 25*4-10'"
+    },
+    {
+      "waktu": "2026-07-29 18:50:58",
+      "jenis": "pesan_user",
+      "isi": "3*3"
+    },
+    {
+      "waktu": "2026-07-29 18:51:00",
+      "jenis": "balasan_kivy",
+      "isi": "Gemini Error (404): This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements."
+    },
+    {
+      "waktu": "2026-07-29 19:18:39",
+      "jenis": "pesan_user",
+      "isi": "terjemahkan  ke bahasa Inggris:"
+    },
+    {
+      "waktu": "2026-07-29 19:18:40",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, API Key Gemini di kode ini formatnya tidak valid (harus diawali 'AIza...'). Silakan buat API Key baru gratis di https://aistudio.google.com/apikey lalu ganti nilai GEMINI_API_KEY di main.py."
+    },
+    {
+      "waktu": "2026-07-29 19:40:08",
+      "jenis": "pesan_user",
+      "isi": "hay"
+    },
+    {
+      "waktu": "2026-07-29 19:40:09",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, API Key Gemini di kode ini formatnya tidak valid (harus diawali 'AIza...'). Silakan buat API Key baru gratis di https://aistudio.google.com/apikey lalu ganti nilai GEMINI_API_KEY di main.py."
+    },
+    {
+      "waktu": "2026-07-29 19:44:25",
+      "jenis": "pesan_user",
+      "isi": "hay"
+    },
+    {
+      "waktu": "2026-07-29 19:44:26",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, API Key Gemini di kode ini formatnya tidak valid (harus diawali 'AIza...'). Silakan buat API Key baru gratis di https://aistudio.google.com/apikey lalu ganti nilai GEMINI_API_KEY di main.py."
+    },
+    {
+      "waktu": "2026-07-29 19:55:05",
+      "jenis": "pesan_user",
+      "isi": "buka instagram"
+    },
+    {
+      "waktu": "2026-07-29 20:06:24",
+      "jenis": "pesan_user",
+      "isi": "hy"
+    },
+    {
+      "waktu": "2026-07-29 20:06:25",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, API Key Gemini di kode ini formatnya tidak valid (harus diawali 'AIza...'). Silakan buat API Key baru gratis di https://aistudio.google.com/apikey lalu ganti nilai GEMINI_API_KEY di main.py."
+    },
+    {
+      "waktu": "2026-07-29 20:08:34",
+      "jenis": "pesan_user",
+      "isi": "hy"
+    },
+    {
+      "waktu": "2026-07-29 20:08:35",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, API Key Gemini di kode ini formatnya tidak valid (harus diawali 'AIza...'). Silakan buat API Key baru gratis di https://aistudio.google.com/apikey lalu ganti nilai GEMINI_API_KEY di main.py."
+    },
+    {
+      "waktu": "2026-07-29 20:11:19",
+      "jenis": "pesan_user",
+      "isi": "hallo"
+    },
+    {
+      "waktu": "2026-07-29 20:11:19",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, API Key Gemini di kode ini formatnya tidak valid (harus diawali 'AIza...'). Silakan buat API Key baru gratis di https://aistudio.google.com/apikey lalu ganti nilai GEMINI_API_KEY di main.py."
+    },
+    {
+      "waktu": "2026-07-29 20:13:16",
+      "jenis": "pesan_user",
+      "isi": "cuaca hari ini"
+    },
+    {
+      "waktu": "2026-07-29 20:13:18",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, aku gak nemu kota 'hari ini'. Coba nama kota lain."
+    },
+    {
+      "waktu": "2026-07-29 20:13:28",
+      "jenis": "pesan_user",
+      "isi": "kota bekasi"
+    },
+    {
+      "waktu": "2026-07-29 20:13:28",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, API Key Gemini di kode ini formatnya tidak valid (harus diawali 'AIza...'). Silakan buat API Key baru gratis di https://aistudio.google.com/apikey lalu ganti nilai GEMINI_API_KEY di main.py."
+    },
+    {
+      "waktu": "2026-07-29 20:13:37",
+      "jenis": "pesan_user",
+      "isi": "cuaca kota bekasi"
+    },
+    {
+      "waktu": "2026-07-29 20:13:41",
+      "jenis": "balasan_kivy",
+      "isi": "🌤️ Cuaca di Kota Bekasi sekarang:\n🌤️ Cerah berawan sedikit, 28.0°C\nKelembapan: 72%  |  Angin: 6.5 km/jam"
+    },
+    {
+      "waktu": "2026-07-29 20:13:59",
+      "jenis": "pesan_user",
+      "isi": "aku dalam bahasa inggris"
+    },
+    {
+      "waktu": "2026-07-29 20:13:59",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, API Key Gemini di kode ini formatnya tidak valid (harus diawali 'AIza...'). Silakan buat API Key baru gratis di https://aistudio.google.com/apikey lalu ganti nilai GEMINI_API_KEY di main.py."
+    },
+    {
+      "waktu": "2026-07-29 20:14:17",
+      "jenis": "pesan_user",
+      "isi": "terjemahkan aku dalam bahasa inggris"
+    },
+    {
+      "waktu": "2026-07-29 20:14:17",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, API Key Gemini di kode ini formatnya tidak valid (harus diawali 'AIza...'). Silakan buat API Key baru gratis di https://aistudio.google.com/apikey lalu ganti nilai GEMINI_API_KEY di main.py."
+    },
+    {
+      "waktu": "2026-07-29 20:14:21",
+      "jenis": "pesan_user",
+      "isi": "Bagaimana harga crypto saat ini?"
+    },
+    {
+      "waktu": "2026-07-29 20:14:21",
+      "jenis": "balasan_kivy",
+      "isi": "📊 RINGKASAN PASAR GLOBAL\n• Bitcoin : $64,240  |  • Ethereum : $1,903.1\n• Solana  : $73.46  |  • S&P 500  : 7428.78"
+    },
+    {
+      "waktu": "2026-07-29 20:14:25",
+      "jenis": "pesan_user",
+      "isi": "Beri aku ide menarik buat hari ini, Bos!"
+    },
+    {
+      "waktu": "2026-07-29 20:14:25",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, API Key Gemini di kode ini formatnya tidak valid (harus diawali 'AIza...'). Silakan buat API Key baru gratis di https://aistudio.google.com/apikey lalu ganti nilai GEMINI_API_KEY di main.py."
+    },
+    {
+      "waktu": "2026-07-30 08:47:00",
+      "jenis": "pesan_user",
+      "isi": "hay"
+    },
+    {
+      "waktu": "2026-07-30 08:47:02",
+      "jenis": "balasan_kivy",
+      "isi": "Gemini Error (404): This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements."
+    },
+    {
+      "waktu": "2026-07-30 08:47:15",
+      "jenis": "pesan_user",
+      "isi": "sejarah indonesia"
+    },
+    {
+      "waktu": "2026-07-30 08:47:17",
+      "jenis": "balasan_kivy",
+      "isi": "Gemini Error (404): This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements."
+    },
+    {
+      "waktu": "2026-07-30 18:23:49",
+      "jenis": "pesan_user",
+      "isi": "hy"
+    },
+    {
+      "waktu": "2026-07-30 18:23:51",
+      "jenis": "balasan_kivy",
+      "isi": "Gemini Error (404): This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements."
+    },
+    {
+      "waktu": "2026-07-30 18:35:25",
+      "jenis": "pesan_user",
+      "isi": "sejarah indonesia"
+    },
+    {
+      "waktu": "2026-07-30 18:35:27",
+      "jenis": "balasan_kivy",
+      "isi": "Gemini Error (404): This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements."
+    },
+    {
+      "waktu": "2026-08-01 06:56:50",
+      "jenis": "pesan_user",
+      "isi": "selamat pagi"
+    },
+    {
+      "waktu": "2026-08-01 06:56:52",
+      "jenis": "balasan_kivy",
+      "isi": "Gemini Error (401): Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project."
+    },
+    {
+      "waktu": "2026-08-01 11:54:44",
+      "jenis": "pesan_user",
+      "isi": "selamat pagi"
+    },
+    {
+      "waktu": "2026-08-01 11:54:47",
+      "jenis": "balasan_kivy",
+      "isi": "Gemini Error (401): Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project."
+    },
+    {
+      "waktu": "2026-08-01 11:56:28",
+      "jenis": "pesan_user",
+      "isi": "sejarah indonesia"
+    },
+    {
+      "waktu": "2026-08-01 11:56:30",
+      "jenis": "balasan_kivy",
+      "isi": "Gemini Error (401): Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project."
+    },
+    {
+      "waktu": "2026-08-01 12:19:12",
+      "jenis": "pesan_user",
+      "isi": "halo"
+    },
+    {
+      "waktu": "2026-08-01 12:19:14",
+      "jenis": "balasan_kivy",
+      "isi": "Gemini Error (401): Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project."
+    },
+    {
+      "waktu": "2026-08-01 12:24:02",
+      "jenis": "pesan_user",
+      "isi": "halo"
+    },
+    {
+      "waktu": "2026-08-01 12:24:04",
+      "jenis": "balasan_kivy",
+      "isi": "Gemini Error (401): Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project."
+    },
+    {
+      "waktu": "2026-08-01 13:26:17",
+      "jenis": "pesan_user",
+      "isi": "halo"
+    },
+    {
+      "waktu": "2026-08-01 13:26:19",
+      "jenis": "balasan_kivy",
+      "isi": "Hai, Bos! Ada yang bisa saya bantu hari ini?"
+    },
+    {
+      "waktu": "2026-08-01 13:26:26",
+      "jenis": "pesan_user",
+      "isi": "sejarah indonesia"
+    },
+    {
+      "waktu": "2026-08-01 13:26:28",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, sejarah Indonesia dimulai dari zaman prasejarah dengan kebudayaan megalitik, lalu berkembang menjadi kerajaan-kerajaan besar seperti Srivijaya, Majapahit, dan Kesultanan Islam di Jawa. Pada abad ke‑19, Belanda menjajah hampir seluruh nusantara hingga proklamasi kemerdekaan pada 17 Agustus 1945, diikuti perjuangan diplomatik dan militer melawan agresi Belanda. Sejak itu, Indonesia telah mengalami era demokrasi, Orde Baru, Reformasi, dan kini menjadi negara kepulauan terbesar di dunia dengan keragaman budaya yang luar biasa."
+    },
+    {
+      "waktu": "2026-08-01 14:32:11",
+      "jenis": "pesan_user",
+      "isi": "kivy coba mainkan musik"
+    },
+    {
+      "waktu": "2026-08-01 14:32:15",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, kalau pakai Kivy kamu bisa mainkan musik pakai `SoundLoader`. Contohnya:\n\n```python\nfrom kivy.core.audio import SoundLoader\n\nsound = SoundLoader.load('lagu.mp3')\nif sound:\n    sound.play()\n```\n\nPastikan file audio berada di folder yang sama atau beri path lengkapnya."
+    },
+    {
+      "waktu": "2026-08-01 15:18:25",
+      "jenis": "pesan_user",
+      "isi": "analisa $btc"
+    },
+    {
+      "waktu": "2026-08-01 15:18:27",
+      "jenis": "balasan_kivy",
+      "isi": "Berikut analisa singkat Bitcoin, Bos: harga BTC baru-baru ini berada di zona support $27‑28 ribuan, namun masih berpotensi naik jika data inflasi AS terus menguat. Volume perdagangan menunjukkan minat beli yang meningkat, terutama dari institusi yang kembali masuk pasar. Tetap pantau level resistance $30 ribuan; penembusan di atasnya bisa memicu rally lanjutan."
+    },
+    {
+      "waktu": "2026-08-01 20:47:56",
+      "jenis": "pesan_user",
+      "isi": "analisa $hype dan berikan analisa ENTRY, TP, SL timeframe 5menit"
+    },
+    {
+      "waktu": "2026-08-01 20:47:56",
+      "jenis": "balasan_kivy",
+      "isi": "Cek kartu Video & Berita Trending di bawah ya Bos!"
+    },
+    {
+      "waktu": "2026-08-01 21:05:37",
+      "jenis": "pesan_user",
+      "isi": "cek iklan lowongan pekerjaan"
+    },
+    {
+      "waktu": "2026-08-01 21:05:40",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, mau cek lowongan di bidang apa dan di lokasi mana? Saya bisa bantu cari di portal kerja populer atau beri tips cara memfilter iklan yang relevan. Beri detailnya, ya!"
+    },
+    {
+      "waktu": "2026-08-01 21:06:07",
+      "jenis": "pesan_user",
+      "isi": "cikarang operator atau admin gudang"
+    },
+    {
+      "waktu": "2026-08-01 21:06:09",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, apakah Anda sedang mencari lowongan kerja sebagai operator atau admin gudang di Cikarang? Saya bisa bantu cari info perusahaan, persyaratan, atau tips melamar—silakan beri detail lebih lanjut!"
+    },
+    {
+      "waktu": "2026-08-01 21:06:30",
+      "jenis": "pesan_user",
+      "isi": "ya cari loker"
+    },
+    {
+      "waktu": "2026-08-01 21:06:34",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, mau cari loker di bidang apa dan kota mana? Kasih tahu dulu supaya aku bisa kasih rekomendasi situs atau lowongan yang paling pas. 🚀"
+    },
+    {
+      "waktu": "2026-08-01 21:06:48",
+      "jenis": "pesan_user",
+      "isi": "operator atau admin gudang"
+    },
+    {
+      "waktu": "2026-08-01 21:06:51",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, operator gudang biasanya bertugas mengelola alur masuk‑keluar barang, mengoperasikan peralatan seperti forklift, serta memastikan stok tercatat akurat. Admin gudang fokus pada pencatatan data, pembuatan laporan inventaris, dan koordinasi dengan tim logistik. Keduanya bekerja sama agar proses penyimpanan dan distribusi berjalan lancar."
+    },
+    {
+      "waktu": "2026-08-01 21:07:12",
+      "jenis": "pesan_user",
+      "isi": "lowongan kerjaannya"
+    },
+    {
+      "waktu": "2026-08-01 21:07:15",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, lagi nyari lowongan kerja di bidang apa dan di kota mana? Saya bisa kasih info terbaru buat IT, pemasaran, atau produksi di Jakarta, Bandung, dan Surabaya. Kasih tahu detailnya, ya!"
+    },
+    {
+      "waktu": "2026-08-02 07:05:20",
+      "jenis": "pesan_user",
+      "isi": "putar musik"
+    },
+    {
+      "waktu": "2026-08-02 07:05:21",
+      "jenis": "balasan_kivy",
+      "isi": "Maaf, Bos, saya tidak bisa memutar musik langsung di sini. Coba buka aplikasi Spotify, YouTube Music, atau layanan streaming favorit Anda, lalu pilih lagu yang ingin didengar. Selamat menikmati!"
+    },
+    {
+      "waktu": "2026-08-02 21:46:25",
+      "jenis": "pesan_user",
+      "isi": "pokemon"
+    },
+    {
+      "waktu": "2026-08-02 21:46:26",
+      "jenis": "balasan_kivy",
+      "isi": "Pokemon adalah franchise media asal Jepang yang mencakup video game, kartu koleksi, anime, dan film, berfokus pada makhluk fiksi yang dapat ditangkap, dilatih, serta dipertaruhkan. Ada lebih dari 900 spesies yang terbagi dalam berbagai tipe seperti Api, Air, Tanah, dan Psikis. Kalau Bos mau mulai bermain, coba dulu game **Pokémon Sword** atau **Pokémon Scarlet** yang cocok untuk pemula. 🚀"
+    },
+    {
+      "waktu": "2026-08-02 21:46:40",
+      "jenis": "pesan_user",
+      "isi": "gambar pokemon"
+    },
+    {
+      "waktu": "2026-08-02 21:46:42",
+      "jenis": "balasan_kivy",
+      "isi": "Berikut contoh gambar ASCII sederhana Pikachu yang bisa Bos pakai di chat atau catatan:\n\n```\n⢀⡴⠑⡄⠀⣀⣤⣤⣤⣀⡀\n⠸⡇⠀⠿⡿⠿⠿⠿⠿⠿⠿⠛⠂\n⢀⣀⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤"
+    }
+  ],
+  "pengingat": [],
+  "catatan": []
+}
