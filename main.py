@@ -6,6 +6,7 @@ import threading
 import time
 import webbrowser
 import xml.etree.ElementTree as ET
+import base64
 from typing import Any, Callable, Dict, List, Optional, cast
 
 import requests
@@ -22,6 +23,15 @@ from kivy.uix.button import Button
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.image import AsyncImage, Image
+from kivy.loader import Loader
+
+# Kivy secara default cuma memuat 2 gambar sekaligus (num_workers=2). Dengan
+# banyak thumbnail video & berita dimuat bersamaan, sisanya jadi antre lama
+# atau gagal diam-diam. Naikkan kapasitasnya di sini.
+try:
+    Loader.num_workers = 8
+except Exception:
+    pass
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
@@ -29,6 +39,7 @@ from kivy.uix.widget import Widget
 from kivy.utils import platform
 from io import BytesIO
 from kivy.core.image import Image as CoreImage
+from PIL import Image as PILImage, ImageDraw, ImageFont
 
 try:
     import cairosvg
@@ -76,12 +87,20 @@ WARNA_THUMB_VIDEO_BG = (0.55, 0.80, 1.0, 0.22)  # biru muda transparan (placehol
 WARNA_CARD_CHAT = (0.08, 0.09, 0.17, 1)
 WARNA_BUBBLE_USER = (0.36, 0.32, 0.94, 1)
 WARNA_BUBBLE_KIVY = (0.15, 0.16, 0.27, 1)
-WARNA_TOMBOL_MIC = (0.95, 0.28, 0.46, 1)
-WARNA_TOMBOL_TRADING = (0.09, 0.72, 0.58, 1)
-WARNA_TOMBOL_KIRIM = (0.42, 0.36, 0.98, 1)
+WARNA_TOMBOL_MIC = (0.918, 0.263, 0.208, 1)     # Google Red #EA4335
+WARNA_TOMBOL_TRADING = (0.204, 0.659, 0.325, 1)  # Google Green #34A853
+WARNA_TOMBOL_KIRIM = (0.259, 0.522, 0.957, 1)    # Google Blue #4285F4
 WARNA_TOOL_CHIP = (0.16, 0.17, 0.28, 1)
 WARNA_AKSEN = (0.55, 0.45, 1.0, 1)
 WARNA_SHADOW = (0, 0, 0, 0.35)
+
+# ------------------------------------------------------------------------
+# PALET GOOGLE MATERIAL (dipakai untuk aksen tombol & badge, ala produk Google)
+# ------------------------------------------------------------------------
+GOOGLE_BLUE = (0.259, 0.522, 0.957, 1)    # #4285F4
+GOOGLE_RED = (0.918, 0.263, 0.208, 1)     # #EA4335
+GOOGLE_YELLOW = (0.984, 0.737, 0.020, 1)  # #FBBC05
+GOOGLE_GREEN = (0.204, 0.659, 0.325, 1)   # #34A853
 
 activity: Any = None
 if platform == 'android':
@@ -251,22 +270,36 @@ class CardFloat(FloatLayout):
 
 
 class RoundedButton(Button):
-    """Tombol pill modern dengan animasi tekan yang lebih halus."""
-    def __init__(self, bg_color=(0.20, 0.55, 0.85, 1), radius: float = 18, **kwargs: Any) -> None:
+    """Tombol pill modern dengan animasi tekan yang lebih halus.
+    Bisa diberi `outline_color` untuk gaya chip bergaris tepi ala Groq Playground.
+    """
+    def __init__(self, bg_color=(0.20, 0.55, 0.85, 1), radius: float = 18,
+                 outline_color: Optional[tuple] = None, outline_width: float = 1.3, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.background_normal = ''
         self.background_down = ''
         self.background_color = (0, 0, 0, 0)
         self._base_color = bg_color
+        self._radius = radius
         with self.canvas.before:
             Color(*bg_color)
             self._bg = RoundedRectangle(pos=self.pos, size=self.size, radius=[radius])
+            if outline_color is not None:
+                Color(*outline_color)
+                self._outline = Line(
+                    rounded_rectangle=(self.x, self.y, self.width, self.height, radius),
+                    width=outline_width
+                )
+            else:
+                self._outline = None
         self.bind(pos=self._update_bg, size=self._update_bg)
         self.bind(on_press=self._animasi_tekan)
 
     def _update_bg(self, *args: Any) -> None:
         self._bg.pos = self.pos
         self._bg.size = self.size
+        if self._outline is not None:
+            self._outline.rounded_rectangle = (self.x, self.y, self.width, self.height, self._radius)
 
     def _animasi_tekan(self, *args: Any) -> None:
         Animation.cancel_all(self, 'opacity')
@@ -389,6 +422,190 @@ def svg_to_texture(svg_markup: str, px_width: int, px_height: int):
     except Exception:
         return None
 
+
+def _ukur_teks(draw: "ImageDraw.ImageDraw", teks: str, font: Any) -> tuple:
+    """Ganti draw.textsize() yang sudah DIHAPUS total sejak Pillow 10.0.
+    Pillow modern hanya punya draw.textbbox() / font.getbbox() sebagai penggantinya.
+    """
+    try:
+        bbox = draw.textbbox((0, 0), teks, font=font)
+        return (bbox[2] - bbox[0], bbox[3] - bbox[1])
+    except Exception:
+        try:
+            bbox = font.getbbox(teks)
+            return (bbox[2] - bbox[0], bbox[3] - bbox[1])
+        except Exception:
+            # Fallback kasar terakhir kalau semua API gagal
+            return (len(teks) * 8, 16)
+
+
+def generate_sticker(text: str, filename: Optional[str] = None) -> Optional[str]:
+    """Generate a simple sticker PNG with text and emoji using Pillow.
+    Returns path to PNG or None on failure.
+    """
+    try:
+        stickers_dir = os.path.join(os.path.dirname(__file__), 'assets', 'stickers')
+        os.makedirs(stickers_dir, exist_ok=True)
+        if not filename:
+            safe = ''.join(c for c in text if c.isalnum() or c in (' ', '-')).rstrip()
+            filename = f"sticker_{int(time.time())}_{safe[:20].replace(' ', '_')}.png"
+        path = os.path.join(stickers_dir, filename)
+
+        # Create image 240x240 with rounded background
+        size = (240, 240)
+        bg = (13, 17, 23)
+        im = PILImage.new('RGBA', size, bg + (255,))
+        draw = ImageDraw.Draw(im)
+
+        # draw rounded rect background
+        radius = 28
+        rect = (8, 8, size[0]-8, size[1]-8)
+        draw.rounded_rectangle(rect, radius=radius, fill=(28,34,48,255))
+
+        # draw big emoji / robot face
+        try:
+            font_emoji = ImageFont.truetype("seguiemj.ttf", 72)
+        except Exception:
+            font_emoji = ImageFont.load_default()
+        emoji = '🤖'
+        w, h = _ukur_teks(draw, emoji, font_emoji)
+        draw.text(((size[0]-w)/2, 28), emoji, font=font_emoji, fill=(0,255,204,255))
+
+        # draw text wrapped
+        try:
+            font = ImageFont.truetype("arial.ttf", 16)
+        except Exception:
+            font = ImageFont.load_default()
+        lines = []
+        words = text.split()
+        line = ''
+        for word in words:
+            test = (line + ' ' + word).strip()
+            if _ukur_teks(draw, test, font)[0] > (size[0] - 32):
+                lines.append(line)
+                line = word
+            else:
+                line = test
+        if line:
+            lines.append(line)
+
+        y = 110
+        for ln in lines[:4]:
+            w, h = _ukur_teks(draw, ln, font)
+            draw.text(((size[0]-w)/2, y), ln, font=font, fill=(220,220,230,255))
+            y += h + 4
+
+        im.save(path)
+        return path
+    except Exception:
+        return None
+
+
+def _get_stickers_dir() -> str:
+    try:
+        app = App.get_running_app()
+        user_data_dir = getattr(app, 'user_data_dir', None)
+        if user_data_dir:
+            stickers_dir = os.path.join(user_data_dir, 'stickers')
+        else:
+            stickers_dir = os.path.join(os.path.dirname(__file__), 'assets', 'stickers')
+    except Exception:
+        stickers_dir = os.path.join(os.path.dirname(__file__), 'assets', 'stickers')
+    os.makedirs(stickers_dir, exist_ok=True)
+    return stickers_dir
+
+
+def _save_base64_image(base64_data: str, filename: Optional[str] = None) -> Optional[str]:
+    try:
+        stickers_dir = _get_stickers_dir()
+        if not filename:
+            filename = f"sticker_ai_{int(time.time())}.png"
+        path = os.path.join(stickers_dir, filename)
+        data = base64.b64decode(base64_data)
+        with open(path, 'wb') as f:
+            f.write(data)
+        return path
+    except Exception:
+        return None
+
+
+def _save_pil_image(image: PILImage.Image, filename: Optional[str] = None) -> Optional[str]:
+    try:
+        stickers_dir = _get_stickers_dir()
+        if not filename:
+            filename = f"sticker_local_{int(time.time())}.png"
+        path = os.path.join(stickers_dir, filename)
+        image.save(path)
+        return path
+    except Exception:
+        return None
+
+
+def generate_local_sticker_from_prompt(prompt: str) -> Optional[str]:
+    """Generate a sticker image from a locally installed Stable Diffusion model."""
+    try:
+        import importlib
+        torch = importlib.import_module('torch')
+        diffusers = importlib.import_module('diffusers')
+        StableDiffusionPipeline = getattr(diffusers, 'StableDiffusionPipeline')
+    except Exception:
+        return None
+
+    try:
+        model_id = os.environ.get('LOCAL_SD_MODEL', 'runwayml/stable-diffusion-v1-5')
+        device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        kwargs = {'torch_dtype': torch.float16} if device == 'cuda' else {}
+        pipe = StableDiffusionPipeline.from_pretrained(model_id, **kwargs)
+        pipe = pipe.to(device)
+        result = pipe(prompt, num_inference_steps=25, guidance_scale=7.5)
+        image = result.images[0]
+        return _save_pil_image(image, filename=f"sticker_local_{int(time.time())}.png")
+    except Exception:
+        return None
+
+
+def generate_ai_sticker_from_prompt(prompt: str) -> Optional[str]:
+    """Generate a sticker image from a hosted AI image endpoint if an API key is configured."""
+    api_key = os.environ.get('OPENAI_API_KEY') or os.environ.get('STABILITY_API_KEY')
+    if not api_key:
+        return None
+
+    try:
+        if os.environ.get('OPENAI_API_KEY'):
+            url = 'https://api.openai.com/v1/images/generations'
+            headers = {'Authorization': f'Bearer {api_key}', 'Content-Type': 'application/json'}
+            payload = {
+                'prompt': prompt,
+                'n': 1,
+                'size': '512x512'
+            }
+            response = requests.post(url, headers=headers, json=payload, timeout=30)
+            response.raise_for_status()
+            data = response.json()
+            b64 = data['data'][0]['b64_json']
+        else:
+            url = 'https://api.stability.ai/v1/generation/stable-diffusion-512-v2-1/text-to-image'
+            headers = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': f'Bearer {api_key}'
+            }
+            payload = {
+                'text_prompts': [{'text': prompt}],
+                'cfg_scale': 7,
+                'height': 512,
+                'width': 512,
+                'samples': 1
+            }
+            response = requests.post(url, headers=headers, json=payload, timeout=30)
+            response.raise_for_status()
+            data = response.json()
+            b64 = data['artifacts'][0]['base64']
+
+        return _save_base64_image(b64, filename=f"sticker_ai_{int(time.time())}.png")
+    except Exception:
+        return None
+
 class AvatarBadge(FloatLayout):
     """Fallback sederhana untuk avatar robot jika dibutuhkan."""
     def __init__(self, emoji: str = "🤖", bg_color=WARNA_AKSEN, size_dp: float = 56, **kwargs: Any) -> None:
@@ -408,7 +625,7 @@ class AvatarBadge(FloatLayout):
 
 
 class ChatBubble(BoxLayout):
-    def __init__(self, teks: str, dari_user: bool, **kwargs: Any) -> None:
+    def __init__(self, teks: str, dari_user: bool, image_path: Optional[str] = None, **kwargs: Any) -> None:
         super().__init__(orientation='horizontal', size_hint=(1, None), spacing=dp(6), opacity=0, **kwargs)
         bg = WARNA_BUBBLE_USER if dari_user else WARNA_BUBBLE_KIVY
         fg = (1, 1, 1, 1) if dari_user else (0.90, 0.95, 1, 1)
@@ -448,6 +665,15 @@ class ChatBubble(BoxLayout):
 
         bubble = Card(bg_color=bg, radius=16, shadow=False, size_hint=(None, None), padding=(dp(12), dp(9)))
         bubble.add_widget(isi_bubble)
+
+        # If an image_path is provided, add the image below the text inside the bubble
+        if image_path and os.path.exists(image_path):
+            try:
+                img_w = dp(140)
+                img = Image(source=image_path, size_hint=(None, None), size=(img_w, img_w * 0.75), allow_stretch=True, keep_ratio=True)
+                isi_bubble.add_widget(img)
+            except Exception:
+                pass
         label.bind(size=lambda s, v: setattr(bubble, 'width', min(v[0] + dp(24), lebar_maksimal + dp(24))))
         isi_bubble.bind(height=lambda s, v: setattr(bubble, 'height', v + dp(16)))
         bubble.bind(height=lambda s, v: setattr(self, 'height', max(v, dp(26)) + dp(4)))
@@ -517,6 +743,30 @@ class VideoModal(FloatLayout):
         self._bg.size = self.size
 
 
+def buat_async_image_retry(source: str, max_percobaan: int = 3, jeda_detik: float = 2.5, **kwargs: Any) -> AsyncImage:
+    """AsyncImage dengan retry otomatis. Kalau gambar gagal/belum termuat
+    setelah beberapa detik (misal kena antrean loader Kivy atau koneksi
+    lambat), coba reload beberapa kali sebelum menyerah.
+    """
+    img = AsyncImage(source=source, **kwargs)
+    percobaan = {'n': 0}
+
+    def cek_dan_retry(_dt: float) -> None:
+        if img.texture is not None:
+            return  # sudah berhasil termuat
+        if percobaan['n'] >= max_percobaan:
+            return
+        percobaan['n'] += 1
+        try:
+            img.reload()
+        except Exception:
+            pass
+        Clock.schedule_once(cek_dan_retry, jeda_detik)
+
+    Clock.schedule_once(cek_dan_retry, jeda_detik)
+    return img
+
+
 class ClickableCardFloat(ButtonBehavior, CardFloat):
     pass
 
@@ -530,7 +780,7 @@ class NewsCard(BoxLayout):
 
         thumb_wrap = CardFloat(bg_color=WARNA_THUMB_VIDEO_BG, radius=10, size_hint=(None, None), size=(dp(68), dp(68)))
         if gambar:
-            thumb = AsyncImage(source=gambar, size_hint=(1, 1), allow_stretch=True, keep_ratio=True)
+            thumb = buat_async_image_retry(gambar, size_hint=(1, 1), allow_stretch=True, keep_ratio=True)
         else:
             thumb = Label(
                 text="No Image", font_size='10sp', color=(0.88, 0.88, 0.92, 1),
@@ -688,8 +938,8 @@ class CoinCard(Card):
 
         header = BoxLayout(orientation='horizontal', size_hint=(1, None), height=dp(28), spacing=dp(8))
         if image_url:
-            icon = AsyncImage(
-                source=image_url, size_hint=(None, None), size=(dp(28), dp(28)),
+            icon = buat_async_image_retry(
+                image_url, size_hint=(None, None), size=(dp(28), dp(28)),
                 allow_stretch=True, keep_ratio=True
             )
         else:
@@ -739,7 +989,6 @@ class RobotAIVector(BoxLayout):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         Window.clearcolor = WARNA_BG
-        Window.bind(size=self._update_layout_on_resize)
         self.orientation = 'vertical'
         self.padding = dp(12)
         self.spacing = dp(12)
@@ -756,12 +1005,13 @@ class RobotAIVector(BoxLayout):
             self.muat_daftar_aplikasi_terinstall()
 
         self.status_robot = 'idle'
+        self.assistant_history: List[str] = []
 
         # -------------------- HEADER --------------------
         header = Card(bg_color=WARNA_CARD_HEADER, radius=20, orientation='horizontal',
                       size_hint=(1, None), height=dp(84), padding=dp(10), spacing=dp(12))
 
-        avatar_wrap = FloatLayout(size_hint=(None, 1), width=dp(58))
+        avatar_wrap = FloatLayout(size_hint=(None, 1), width=dp(68))
         # Save SVG -> PNG asset if possible, then use the asset image in the header
         assets_dir = os.path.join(os.path.dirname(__file__), 'assets')
         asset_path = os.path.join(assets_dir, 'robot_logo.png')
@@ -781,8 +1031,8 @@ class RobotAIVector(BoxLayout):
         if os.path.exists(asset_path):
             from kivy.uix.image import Image as KivyImage
             try:
-                img = KivyImage(source=asset_path, size_hint=(None, None), size=(dp(58), dp(58)),
-                                 allow_stretch=True, keep_ratio=True, pos_hint={'center_y': 0.5})
+                img = KivyImage(source=asset_path, size_hint=(None, None), size=(dp(52), dp(52)),
+                                 allow_stretch=True, keep_ratio=True, pos_hint={'center_x': 0.5, 'center_y': 0.5})
                 self.robot_face = img
                 avatar_wrap.add_widget(img)
                 used_image = True
@@ -797,10 +1047,10 @@ class RobotAIVector(BoxLayout):
                 img = KivyImage(
                     texture=svg_texture,
                     size_hint=(None, None),
-                    size=(dp(58), dp(58)),
+                    size=(dp(52), dp(52)),
                     allow_stretch=True,
                     keep_ratio=True,
-                    pos_hint={'center_y': 0.5}
+                    pos_hint={'center_x': 0.5, 'center_y': 0.5}
                 )
                 self.robot_face = img
                 avatar_wrap.add_widget(img)
@@ -853,11 +1103,17 @@ class RobotAIVector(BoxLayout):
         self.chat_card = Card(bg_color=WARNA_CARD_CHAT, radius=20, orientation='vertical',
                                size_hint=(1, None), height=dp(330), padding=dp(12), spacing=dp(8))
 
-        header_chat = BoxLayout(orientation='horizontal', size_hint=(1, None), height=dp(26))
+        header_chat = BoxLayout(orientation='horizontal', size_hint=(1, None), height=dp(26), spacing=dp(6))
         header_chat.add_widget(Label(
             text="💬  Chat AI Asisten", font_size='14sp', bold=True,
             color=(0.80, 0.82, 1, 1), size_hint=(1, 1), halign='left', valign='middle'
         ))
+        badge_groq = RoundedButton(
+            text="⚡ Groq", bg_color=(0.259, 0.522, 0.957, 0.16), outline_color=(0.259, 0.522, 0.957, 0.75),
+            outline_width=1.2, size_hint=(None, 1), width=dp(62), font_size='10sp', radius=13,
+            color=(0.55, 0.75, 1, 1)
+        )
+        header_chat.add_widget(badge_groq)
         self.btn_toggle_chat = RoundedButton(
             text="▼", bg_color=(0.22, 0.23, 0.36, 1), size_hint=(None, 1), width=dp(30), font_size='11sp', radius=15
         )
@@ -885,22 +1141,29 @@ class RobotAIVector(BoxLayout):
         tools_container.bind(minimum_width=tools_container.setter('width'))
 
         daftar_tools = [
-            ("🧹 Bersihkan", self._bersihkan_chat, dp(90)),
-            ("💡 Ide Hari Ini", lambda x: self.proses_pesan("Beri aku ide menarik buat hari ini, Bos!"), dp(118)),
-            ("📈 Cek Crypto", lambda x: self.proses_pesan("Bagaimana harga crypto saat ini?"), dp(108)),
-            ("🌤️ Cuaca", lambda x: self.proses_pesan("cuaca Jakarta"), dp(85)),
-            ("⏰ Pengingat", lambda x: self.proses_pesan("lihat pengingat"), dp(105)),
-            ("🧮 Kalkulator", lambda x: self.proses_pesan("hitung "), dp(108)),
-            ("🌐 Terjemah", lambda x: self.proses_pesan("terjemahkan  ke bahasa Inggris: "), dp(98)),
+            ("🧹 Bersihkan", self._bersihkan_chat, dp(90), None),
+            ("💡 Ide Hari Ini", lambda x: self.proses_pesan("Beri aku ide menarik buat hari ini, Bos!"), dp(118), GOOGLE_YELLOW),
+            ("📈 Cek Crypto", lambda x: self.proses_pesan("Bagaimana harga crypto saat ini?"), dp(108), GOOGLE_GREEN),
+            ("🌤️ Cuaca", lambda x: self.proses_pesan("cuaca Jakarta"), dp(85), GOOGLE_BLUE),
+            ("⏰ Pengingat", lambda x: self.proses_pesan("lihat pengingat"), dp(105), None),
+            ("🧮 Kalkulator", lambda x: self.proses_pesan("hitung "), dp(108), None),
+            ("🌐 Terjemah", lambda x: self.proses_pesan("terjemahkan  ke bahasa Inggris: "), dp(98), GOOGLE_RED),
         ]
-        for teks_tombol, aksi, lebar in daftar_tools:
-            btn = RoundedButton(text=teks_tombol, bg_color=WARNA_TOOL_CHIP, size_hint=(None, 1),
-                                 width=lebar, font_size='10sp', radius=15)
+        for teks_tombol, aksi, lebar, warna_outline in daftar_tools:
+            # Gaya chip bergaris tepi (outline) ala Groq Playground: isian gelap
+            # transparan + border tipis warna aksen, bukan solid seperti sebelumnya.
+            outline = (warna_outline[0], warna_outline[1], warna_outline[2], 0.65) if warna_outline else (0.45, 0.5, 0.65, 0.45)
+            btn = RoundedButton(
+                text=teks_tombol, bg_color=(0.12, 0.13, 0.20, 0.55),
+                outline_color=outline, outline_width=1.1,
+                size_hint=(None, 1), width=lebar, font_size='10sp', radius=15
+            )
             btn.bind(on_press=aksi)
             tools_container.add_widget(btn)
 
         tools_row.add_widget(tools_container)
         self.chat_body.add_widget(tools_row)
+
 
         input_row = BoxLayout(orientation='horizontal', size_hint=(1, None), height=dp(42), spacing=dp(8))
         input_wrap = Card(bg_color=(0.13, 0.14, 0.23, 1), radius=21, shadow=False,
@@ -919,6 +1182,24 @@ class RobotAIVector(BoxLayout):
                                         width=dp(46), bold=True, radius=23)
         self.btn_kirim.bind(on_press=self._kirim_dari_input)
         input_row.add_widget(self.btn_kirim)
+
+        # Sticker generation button: create sticker from input or last assistant reply
+        self.btn_sticker = RoundedButton(text="🎨", bg_color=GOOGLE_BLUE, size_hint=(None, 1),
+                         width=dp(46), bold=True, radius=23)
+        self.btn_sticker.bind(on_press=self._buat_sticker_dari_input)
+        input_row.add_widget(self.btn_sticker)
+
+        # Local-model sticker generation button
+        self.btn_local_sticker = RoundedButton(text="🧠", bg_color=GOOGLE_YELLOW, size_hint=(None, 1),
+                         width=dp(46), bold=True, radius=23)
+        self.btn_local_sticker.bind(on_press=self._buat_local_ai_sticker)
+        input_row.add_widget(self.btn_local_sticker)
+
+        # Hosted API sticker generation button
+        self.btn_hosted_sticker = RoundedButton(text="☁️", bg_color=GOOGLE_GREEN, size_hint=(None, 1),
+                         width=dp(46), bold=True, radius=23)
+        self.btn_hosted_sticker.bind(on_press=self._buat_hosted_ai_sticker)
+        input_row.add_widget(self.btn_hosted_sticker)
 
         self.chat_body.add_widget(input_row)
         self.chat_card.add_widget(self.chat_body)
@@ -1049,6 +1330,14 @@ class RobotAIVector(BoxLayout):
 
         self.video_modal: Optional[VideoModal] = None
 
+        # Window.bind dipasang di SINI (akhir __init__), bukan di awal --
+        # supaya event resize (yang di Android selalu terjadi begitu app
+        # dibuka, saat window disesuaikan ke ukuran layar asli) tidak
+        # memicu _update_layout_on_resize sebelum semua widget (list_koin,
+        # list_berita, card_pasar, dst) selesai dibuat. Ini penyebab app
+        # force-close saat startup sebelumnya.
+        Window.bind(size=self._update_layout_on_resize)
+
         Clock.schedule_once(self.sambut_bos, 0.8)
         Clock.schedule_interval(lambda dt: self.muat_informasi_hangat(), 60)
         Clock.schedule_interval(lambda dt: self.muat_trending_video(), 300)
@@ -1127,6 +1416,10 @@ class RobotAIVector(BoxLayout):
             self.card_pasar.height = tinggi_header + padding_vertikal
 
     def _update_layout_on_resize(self, instance: Any, size: Any) -> None:
+        # Pengaman lapis kedua: kalau untuk alasan apapun fungsi ini
+        # terpanggil sebelum semua widget selesai dibuat, jangan crash.
+        if not hasattr(self, 'list_koin') or not hasattr(self, 'card_pasar'):
+            return
         self.list_koin.cols = 1 if size[0] < dp(420) else 2
         self._update_berita_layout()
         self._update_list_koin_bg()
@@ -1198,6 +1491,15 @@ class RobotAIVector(BoxLayout):
         bubble = ChatBubble(teks, dari_user)
         self.chat_container.add_widget(bubble)
         Clock.schedule_once(lambda dt: setattr(self.chat_scroll, 'scroll_y', 0), 0.05)
+        # Track assistant messages for sticker prompts
+        try:
+            if not dari_user:
+                self.assistant_history.append(teks)
+                # keep last 20
+                if len(self.assistant_history) > 20:
+                    self.assistant_history = self.assistant_history[-20:]
+        except Exception:
+            pass
         return bubble
 
     def _kirim_dari_input(self, instance: Any) -> None:
@@ -1206,6 +1508,50 @@ class RobotAIVector(BoxLayout):
             return
         self.chat_input.text = ""
         self.proses_pesan(pesan)
+
+    def _buat_sticker_dari_input(self, instance: Any) -> None:
+        # If there's text in input, use it; else use last assistant message
+        teks = self.chat_input.text.strip()
+        if not teks:
+            teks = self.assistant_history[-1] if getattr(self, 'assistant_history', None) and len(self.assistant_history) > 0 else "Sticker dari AI"
+
+        path = generate_sticker(teks)
+        if path:
+            img_bubble = ChatBubble(teks, dari_user=False, image_path=path)
+            self.chat_container.add_widget(img_bubble)
+            Clock.schedule_once(lambda dt: setattr(self.chat_scroll, 'scroll_y', 0), 0.05)
+
+    def _buat_local_ai_sticker(self, instance: Any) -> None:
+        teks = self.chat_input.text.strip()
+        if not teks:
+            teks = self.assistant_history[-1] if getattr(self, 'assistant_history', None) and len(self.assistant_history) > 0 else "Cute robot sticker"
+
+        path = generate_local_sticker_from_prompt(teks)
+        if path:
+            img_bubble = ChatBubble(teks, dari_user=False, image_path=path)
+            self.chat_container.add_widget(img_bubble)
+        else:
+            self._tambah_bubble(
+                "AI sticker lokal tidak tersedia. Pastikan diffusers, torch, dan model Stable Diffusion sudah terpasang.",
+                dari_user=False
+            )
+        Clock.schedule_once(lambda dt: setattr(self.chat_scroll, 'scroll_y', 0), 0.05)
+
+    def _buat_hosted_ai_sticker(self, instance: Any) -> None:
+        teks = self.chat_input.text.strip()
+        if not teks:
+            teks = self.assistant_history[-1] if getattr(self, 'assistant_history', None) and len(self.assistant_history) > 0 else "Cute robot sticker"
+
+        path = generate_ai_sticker_from_prompt(teks)
+        if path:
+            img_bubble = ChatBubble(teks, dari_user=False, image_path=path)
+            self.chat_container.add_widget(img_bubble)
+        else:
+            self._tambah_bubble(
+                "Hosted AI sticker tidak tersedia. Pastikan OPENAI_API_KEY atau STABILITY_API_KEY sudah disetel.",
+                dari_user=False
+            )
+        Clock.schedule_once(lambda dt: setattr(self.chat_scroll, 'scroll_y', 0), 0.05)
 
     def proses_pesan(self, pesan: str) -> None:
         pesan = pesan.strip()
@@ -1740,8 +2086,8 @@ class RobotAIVector(BoxLayout):
                 on_press=lambda url=play_target: self._handle_video_play(url)
             )
             if thumbnail_url:
-                thumb = AsyncImage(
-                    source=thumbnail_url, size_hint=(1, 1), allow_stretch=True,
+                thumb = buat_async_image_retry(
+                    thumbnail_url, size_hint=(1, 1), allow_stretch=True,
                     keep_ratio=True, anim_delay=-1
                 )
                 thumb_wrap.add_widget(thumb)

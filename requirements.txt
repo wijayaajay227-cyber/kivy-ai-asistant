@@ -15,11 +15,17 @@ kivy==2.3.1
 
 requests==2.32.3
 buildozer==1.5.0
+Pillow>=10.0.0
 
 # Dinaikkan dari 0.29.36 (lama, sering gagal build di Python 3.12/3.13)
 # ke Cython 3.x yang sudah didukung resmi oleh pyjnius versi terbaru.
 cython>=3.0.0
 certifi>=2024.2.2
+
+torch>=2.1.0
+diffusers>=0.26.0
+transformers>=4.35.0
+safetensors>=0.3.0
 
 # Untuk merender SVG ke PNG di runtime (opsional; fallback ke avatar canvas jika tidak terpasang)
 cairosvg>=2.6.0

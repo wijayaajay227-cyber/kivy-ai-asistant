@@ -614,6 +614,76 @@
       "waktu": "2026-08-02 21:46:42",
       "jenis": "balasan_kivy",
       "isi": "Berikut contoh gambar ASCII sederhana Pikachu yang bisa Bos pakai di chat atau catatan:\n\n```\n⢀⡴⠑⡄⠀⣀⣤⣤⣤⣀⡀\n⠸⡇⠀⠿⡿⠿⠿⠿⠿⠿⠿⠛⠂\n⢀⣀⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤"
+    },
+    {
+      "waktu": "2026-08-02 21:54:27",
+      "jenis": "pesan_user",
+      "isi": "hay"
+    },
+    {
+      "waktu": "2026-08-02 21:54:28",
+      "jenis": "balasan_kivy",
+      "isi": "Hai, Bos! Ada yang bisa saya bantu?"
+    },
+    {
+      "waktu": "2026-08-02 21:54:57",
+      "jenis": "pesan_user",
+      "isi": "gamabar pikacu"
+    },
+    {
+      "waktu": "2026-08-02 21:54:59",
+      "jenis": "balasan_kivy",
+      "isi": "Maaf, Bos, saya tidak dapat menampilkan gambar langsung di sini. Kalau mau, saya bisa bantu cari referensi foto kucing yang lucu atau beri tips cara memotret kucingmu agar hasilnya maksimal. Silakan beri tahu apa yang kamu butuhkan!"
+    },
+    {
+      "waktu": "2026-08-02 21:55:20",
+      "jenis": "pesan_user",
+      "isi": "boleh kirim gambar"
+    },
+    {
+      "waktu": "2026-08-02 21:55:21",
+      "jenis": "balasan_kivy",
+      "isi": "Maaf, Bos, saya tidak dapat mengirim atau membuat gambar. Tapi saya bisa membantu menjelaskan atau memberi referensi yang Anda butuhkan. Silakan beri tahu detailnya!"
+    },
+    {
+      "waktu": "2026-08-02 21:59:39",
+      "jenis": "pesan_user",
+      "isi": "buat sticker pikachu"
+    },
+    {
+      "waktu": "2026-08-02 21:59:41",
+      "jenis": "balasan_kivy",
+      "isi": "Maaf Bos, saya tidak bisa memberikan gambar Pikachu yang berhak cipta. Namun, kamu bisa membuat stiker sendiri dengan menggambar versi original atau menggunakan aplikasi desain (misalnya Canva) dan menambahkan elemen listrik yang khas. Jika butuh tutorial singkat, beri tahu saya!"
+    },
+    {
+      "waktu": "2026-08-02 22:16:30",
+      "jenis": "pesan_user",
+      "isi": "buat sticker"
+    },
+    {
+      "waktu": "2026-08-02 22:16:31",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, mau sticker digital atau fisik? Kalau digital, pakai aplikasi desain seperti Canva atau Photoshop, pilih ukuran 512 × 512 px, buat gambar dengan latar transparan, lalu ekspor ke PNG. Kalau fisik, cetak desain tadi di kertas stiker khusus, potong dengan gunting atau mesin pemotong. Selamat berkreasi!"
+    },
+    {
+      "waktu": "2026-08-02 22:16:53",
+      "jenis": "pesan_user",
+      "isi": "buat sticker kepala kucing"
+    },
+    {
+      "waktu": "2026-08-02 22:16:55",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, coba pakai aplikasi desain seperti Canva atau Procreate: pilih kanvas berbentuk lingkaran, gambar siluet kepala kucing dengan garis tebal, lalu tambahkan warna pastel atau pola lucu. Setelah selesai, ekspor sebagai PNG dengan latar transparan, jadi mudah ditempel di chat atau media sosial. Selamat berkreasi!"
+    },
+    {
+      "waktu": "2026-08-06 18:11:35",
+      "jenis": "pesan_user",
+      "isi": "apa saja yang sedang trend sekarang"
+    },
+    {
+      "waktu": "2026-08-06 18:11:36",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, lagi ngetren sekarang ada AI generatif (gambar, video, kode), konten video pendek di platform seperti TikTok & Reels, serta teknologi AR/VR untuk game dan belanja. Di sisi bisnis, sustainable fashion, kendaraan listrik, dan solusi iklim (energy‑tech, carbon‑capture) lagi booming. Selain itu, Web3 dengan NFT & metaverse masih jadi pembicaraan, terutama untuk komunitas kreator. Kalau mau detail lebih spesifik, tinggal bilang aja!"
     }
   ],
   "pengingat": [],
