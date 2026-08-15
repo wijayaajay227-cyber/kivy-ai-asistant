@@ -684,6 +684,46 @@
       "waktu": "2026-08-06 18:11:36",
       "jenis": "balasan_kivy",
       "isi": "Bos, lagi ngetren sekarang ada AI generatif (gambar, video, kode), konten video pendek di platform seperti TikTok & Reels, serta teknologi AR/VR untuk game dan belanja. Di sisi bisnis, sustainable fashion, kendaraan listrik, dan solusi iklim (energy‑tech, carbon‑capture) lagi booming. Selain itu, Web3 dengan NFT & metaverse masih jadi pembicaraan, terutama untuk komunitas kreator. Kalau mau detail lebih spesifik, tinggal bilang aja!"
+    },
+    {
+      "waktu": "2026-08-09 12:34:14",
+      "jenis": "pesan_user",
+      "isi": "build jadi apk"
+    },
+    {
+      "waktu": "2026-08-09 12:34:16",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, untuk mengubah aplikasi Kivy jadi APK cukup pakai **Buildozer**:\n\n1. Install dulu: `pip install buildozer && sudo apt install -y python3-pip python3-setuptools git python3-jinja2` (plus dependensi Android SDK/NDK).  \n2. Di folder proyek, jalankan `buildozer init` → edit *buildozer.spec* (set `package.name`, `package.domain`, `requirements=python3,kivy`).  \n3. Build dengan `buildozer -v android debug` (atau `android release` untuk rilis). APK akan muncul di `bin/`.  \n\nPastikan Java 8 dan Android SDK sudah terpasang, serta aktifkan USB debugging kalau mau testing langsung di perangkat. Selamat mencoba!"
+    },
+    {
+      "waktu": "2026-08-09 12:35:26",
+      "jenis": "pesan_user",
+      "isi": "Beri aku ide menarik buat hari ini, Bos!"
+    },
+    {
+      "waktu": "2026-08-09 12:35:28",
+      "jenis": "balasan_kivy",
+      "isi": "Hai Bos! Coba jalan pagi ke taman sambil bawa kamera, lalu abadikan momen matahari terbit untuk Instagram. Setelah itu, eksperimen resep baru—misalnya sushi roll vegan—sambil dengerin playlist jazz. Kalau mau santai, ikutin tutorial melukis akrilik 15 menit di YouTube dan pajang hasilnya di ruang tamu. Selamat bersenang‑senang!"
+    },
+    {
+      "waktu": "2026-08-15 22:21:44",
+      "jenis": "pesan_user",
+      "isi": "resep nasi goreng"
+    },
+    {
+      "waktu": "2026-08-15 22:21:44",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, API Key Groq belum diisi. Caranya gampang:\n1. Buka https://console.groq.com/keys\n2. Login/daftar pakai akun Google (gratis, tanpa kartu kredit)\n3. Klik 'Create API Key', copy key-nya (diawali 'gsk_')\n4. Copy 'secrets.env.example' jadi 'secrets.env', isi GROQ_API_KEY=key_kamu di situ (untuk PC), atau isi lewat GitHub Secrets kalau build via GitHub Actions"
+    },
+    {
+      "waktu": "2026-08-15 22:29:03",
+      "jenis": "pesan_user",
+      "isi": "RESEP NASI GORENG"
+    },
+    {
+      "waktu": "2026-08-15 22:29:03",
+      "jenis": "balasan_kivy",
+      "isi": "Bos, API Key Groq belum diisi. Caranya gampang:\n1. Buka https://console.groq.com/keys\n2. Login/daftar pakai akun Google (gratis, tanpa kartu kredit)\n3. Klik 'Create API Key', copy key-nya (diawali 'gsk_')\n4. Copy 'secrets.env.example' jadi 'secrets.env', isi GROQ_API_KEY=key_kamu di situ (untuk PC), atau isi lewat GitHub Secrets kalau build via GitHub Actions"
     }
   ],
   "pengingat": [],

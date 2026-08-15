@@ -2,7 +2,7 @@ import os
 from google import genai
 
 # Daftarkan variabel ke dalam environment system lewat Python
-os.environ["GEMINI_API_KEY"] = "AQ.Ab8RN6KsU5-c5m6OAW0VMw6KJPnDtPWj34n4OUPa2jnpbnhwVw"
+os.environ["GROQ_API_KEY"] = "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"
 
 # Sekarang Client() bisa otomatis membaca key di atas
 client = genai.Client()

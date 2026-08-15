@@ -1,0 +1,49 @@
+name: Build APK Android
+
+# Jalan otomatis tiap kali kamu push ke branch main,
+# atau bisa dipicu manual lewat tab "Actions" di GitHub.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependensi sistem
+        run: |
+          sudo apt update
+          sudo apt install -y python3-pip build-essential git zip unzip \
+            openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev \
+            libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev \
+            ffmpeg libsdl2-dev
+
+      - name: Install Buildozer & Cython
+        run: pip install --upgrade buildozer cython
+
+      - name: Buat secrets.env dari GitHub Secrets
+        # Key TIDAK pernah ditulis di kode/log -- diambil langsung dari
+        # Settings > Secrets and variables > Actions di repo GitHub kamu,
+        # lalu ditulis ke secrets.env supaya main.py bisa membacanya saat
+        # build (file ini otomatis ikut dibundel ke APK, lihat buildozer.spec).
+        run: |
+          echo "GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}" >> secrets.env
+          echo "YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }}" >> secrets.env
+
+      - name: Build APK (debug)
+        run: buildozer -v android debug
+
+      - name: Upload APK sebagai artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kivy-ai-assistant-apk
+          path: bin/*.apk

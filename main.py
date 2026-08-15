@@ -72,8 +72,46 @@ if platform == 'win':
 AI_NAME = "KIVY"
 MEMORY_FILE = "memory.json"
 
-YOUTUBE_API_KEY = "AIzaSyCynczyiMVhe8LHq7yp8ZMeAliXyJohWFo"
-GROQ_API_KEY = "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"  # dapatkan gratis di https://console.groq.com/keys
+
+def _muat_secrets_lokal(nama_file: str = "secrets.env") -> None:
+    """Baca file secrets.env sederhana (format KEY=VALUE per baris) dan
+    masukkan isinya ke os.environ, TANPA menimpa env var yang sudah ada
+    (misal yang di-inject GitHub Actions lewat secrets).
+
+    File ini sengaja TIDAK pakai nama '.env' (dotfile) karena Buildozer
+    mendeteksi file untuk dibundel berdasarkan ekstensi, dan dotfile murni
+    seperti '.env' tidak punya ekstensi yang bisa dikenali -- jadi dipakai
+    nama 'secrets.env' (ekstensi 'env') supaya konsisten di semua tempat.
+
+    Tidak butuh library tambahan (python-dotenv dll), cukup Python bawaan.
+    """
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), nama_file)
+    if not os.path.exists(path):
+        return
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            for baris in f:
+                baris = baris.strip()
+                if not baris or baris.startswith('#') or '=' not in baris:
+                    continue
+                key, _, value = baris.partition('=')
+                key = key.strip()
+                value = value.strip().strip('"').strip("'")
+                os.environ.setdefault(key, value)
+    except Exception as e:
+        print(f"Gagal memuat {nama_file}: {e}")
+
+
+_muat_secrets_lokal()
+
+# API key TIDAK ditulis langsung di kode -- diambil dari environment variable.
+# Cara mengisinya:
+#   1) PC/testing lokal  -> copy 'secrets.env.example' jadi 'secrets.env',
+#      isi key aslinya di situ (file ini otomatis di-gitignore, aman).
+#   2) Build via GitHub Actions -> isi lewat Settings > Secrets and variables
+#      > Actions, workflow yang sudah disiapkan otomatis inject ke sini.
+YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", "")
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 
 # ------------------------------------------------------------------------
 # PALET WARNA MODERN (Indigo / Violet Neon Dark Theme)
@@ -1740,7 +1778,9 @@ class RobotAIVector(BoxLayout):
                 "1. Buka https://console.groq.com/keys\n"
                 "2. Login/daftar pakai akun Google (gratis, tanpa kartu kredit)\n"
                 "3. Klik 'Create API Key', copy key-nya (diawali 'gsk_')\n"
-                "4. Tempel di main.py pada baris GROQ_API_KEY"
+                "4. Copy 'secrets.env.example' jadi 'secrets.env', isi "
+                "GROQ_API_KEY=key_kamu di situ (untuk PC), atau isi lewat "
+                "GitHub Secrets kalau build via GitHub Actions"
             )
         elif not api_key.startswith("gsk_"):
             balasan = (
@@ -1784,7 +1824,8 @@ class RobotAIVector(BoxLayout):
                     if kode == 401:
                         balasan = (
                             "Groq Error (401): API Key tidak valid. Cek/buat ulang di "
-                            "https://console.groq.com/keys lalu ganti GROQ_API_KEY di main.py."
+                            "https://console.groq.com/keys lalu update di file secrets.env "
+                            "(PC) atau GitHub Secrets (build cloud)."
                         )
                     elif kode == 429:
                         balasan = "Groq Error (429): Kuota/rate limit terlampaui, coba lagi sebentar Bos."
