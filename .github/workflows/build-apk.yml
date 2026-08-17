@@ -9,7 +9,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # PENTING: ubuntu-latest sekarang = Ubuntu 24.04, yang autoconf/gcc-nya
+    # terlalu baru untuk banyak recipe python-for-android yang sudah lama
+    # tidak di-update (penyebab error "autoreconf: /usr/bin/autoconf failed").
+    # Ubuntu 22.04 jauh lebih kompatibel untuk build Android via Buildozer.
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout kode
         uses: actions/checkout@v4
@@ -24,8 +28,8 @@ jobs:
           sudo apt update
           sudo apt install -y python3-pip build-essential git zip unzip \
             openjdk-17-jdk autoconf automake autopoint gettext libtool \
-            pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake \
-            libffi-dev libssl-dev ffmpeg libsdl2-dev
+            libtool-bin pkg-config zlib1g-dev libncurses5-dev \
+            libncursesw5-dev cmake libffi-dev libssl-dev ffmpeg libsdl2-dev
 
       - name: Install Buildozer & Cython
         run: pip install --upgrade buildozer cython
