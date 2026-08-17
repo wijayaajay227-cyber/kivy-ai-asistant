@@ -26,6 +26,3 @@ torch>=2.1.0
 diffusers>=0.26.0
 transformers>=4.35.0
 safetensors>=0.3.0
-
-# Untuk merender SVG ke PNG di runtime (opsional; fallback ke avatar canvas jika tidak terpasang)
-cairosvg>=2.6.0
