@@ -13,10 +13,13 @@ android.minapi = 26
 android.arch = armeabi-v7a,arm64-v8a
 android.log_level = 2
 
-# cairosvg & yt-dlp ditambahkan supaya fitur render logo SVG dan pemutaran
-# video dalam-app ikut aktif di APK (sebelumnya tidak ada di spec kamu,
-# jadi fitur itu diam-diam nonaktif walau tidak bikin build gagal).
-requirements = python3,kivy,requests,pyjnius,Pillow,certifi,urllib3,charset-normalizer,idna,cairosvg,yt-dlp
+# cairosvg SENGAJA TIDAK dimasukkan -- library ini butuh libcairo (C library
+# native) yang TIDAK punya "recipe" resmi di python-for-android, jadi build
+# akan selalu gagal kalau dipaksa masuk requirements. Untungnya kode di
+# main.py sudah punya fallback aman (CAIROSVG_AVAILABLE = False kalau gagal
+# import), jadi tanpa ini app tetap jalan normal -- cuma render logo dari
+# SVG yang nonaktif (fallback ke avatar canvas biasa).
+requirements = python3,kivy,requests,pyjnius,Pillow,certifi,urllib3,charset-normalizer,idna,yt-dlp
 
 # DIHAPUS: baris "services = overlay:service.py" -- kode overlay di main.py
 # (fungsi mulai_overlay_service) tidak pakai file service custom, cukup

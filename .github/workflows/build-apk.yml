@@ -23,9 +23,9 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y python3-pip build-essential git zip unzip \
-            openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev \
-            libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev \
-            ffmpeg libsdl2-dev
+            openjdk-17-jdk autoconf automake autopoint gettext libtool \
+            pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake \
+            libffi-dev libssl-dev ffmpeg libsdl2-dev
 
       - name: Install Buildozer & Cython
         run: pip install --upgrade buildozer cython
@@ -40,7 +40,10 @@ jobs:
           echo "YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }}" >> secrets.env
 
       - name: Build APK (debug)
-        run: buildozer -v android debug
+        # "yes |" otomatis menjawab "y" ke prompt interaktif apapun yang
+        # muncul (misal konfirmasi lisensi Android SDK), sebagai pengaman
+        # ganda selain flag android.accept_sdk_license di buildozer.spec.
+        run: yes | buildozer -v android debug
 
       - name: Upload APK sebagai artifact
         uses: actions/upload-artifact@v4
