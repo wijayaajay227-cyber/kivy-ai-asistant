@@ -34,6 +34,19 @@ jobs:
       - name: Install Buildozer & Cython
         run: pip install --upgrade buildozer cython
 
+      - name: Cache Buildozer (SDK/NDK/source recipe)
+        # Sekali berhasil download, disimpan di cache GitHub. Run berikutnya
+        # pakai yang sudah tersimpan -- build jauh lebih cepat, dan lebih
+        # jarang kena error 502/network karena tidak download ulang dari nol.
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.buildozer
+            .buildozer
+          key: buildozer-${{ runner.os }}-${{ hashFiles('buildozer.spec') }}
+          restore-keys: |
+            buildozer-${{ runner.os }}-
+
       - name: Buat secrets.env dari GitHub Secrets
         # Key TIDAK pernah ditulis di kode/log -- diambil langsung dari
         # Settings > Secrets and variables > Actions di repo GitHub kamu,
